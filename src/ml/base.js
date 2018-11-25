@@ -1,5 +1,5 @@
 import { prepImg, rgbToGrayscale } from './img'
-import { tf } from './tf'
+import * as tf from '@tensorflow/tfjs'
 
 class Model {
   constructor({ path, imageSize, classes, isGrayscale = false }) {

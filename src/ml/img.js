@@ -1,4 +1,4 @@
-import { tf } from './tf'
+import * as tf from '@tensorflow/tfjs'
 
 const NORMALIZATION_OFFSET = tf.scalar(127.5)
 

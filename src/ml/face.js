@@ -1,8 +1,7 @@
 import * as faceapi from 'face-api.js'
 
 const MODEL_PATH =
-  `${process.env.PUBLIC_URL}/static/models/face/` +
-  'mtcnn_model-weights_manifest.json'
+  `${process.env.PUBLIC_URL}/static/models/face/`
 
 const PARAMS = {
   minFaceSize: 50,
@@ -18,14 +17,12 @@ export class FaceFinder {
   }
 
   async load() {
-    this.model = new faceapi.Mtcnn()
-    await this.model.load(this.path)
+    await faceapi.loadTinyFaceDetectorModel(this.path)
   }
 
   async findFaces(img) {
     const input = await faceapi.toNetInput(img, false, true)
-    const results = await this.model.forward(input, this.params)
-    const detections = results.map(r => r.faceDetection)
+    const detections = await faceapi.detectAllFaces(input, new faceapi.TinyFaceDetectorOptions())
 
     return { input, detections }
   }
