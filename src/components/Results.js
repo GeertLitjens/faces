@@ -5,38 +5,37 @@ import Message from './Message'
 
 const fmt = (x, digits = 1) => format(`.${digits}%`)(x)
 
-const Summary = ({ total, happy }) => (
+const Summary = ({ total, cancer }) => (
   <Message bg="yellow">
-    <strong>Results:</strong> Of <strong>{total}</strong>{' '}
-    {total > 1 ? 'people' : 'person'} detected,{' '}
+    <strong>Results:</strong><strong>{total}</strong>{' '}
+    {total > 1 ? 'plaatjes' : 'plaatje'} geclassficeerd,{' '}
     <strong>
-      {happy} ({fmt(happy / total, 0)})
+      {cancer} ({fmt(cancer / total, 0)})
     </strong>{' '}
-    {happy === 1 ? 'is' : 'are'} happy.
+    {cancer === 1 ? 'bevat er ' : 'bevatten er '} kankercellen.    
   </Message>
 )
 
-const Results = ({ faces, emotions }) => (
+const Results = ({ patches, classifications }) => (
   <div>
     <Summary
-      total={faces.length}
-      happy={emotions.filter(r => r[0].label.emoji === '😄').length}
+      total={patches.length}
+      cancer={classifications.filter(r => r.label === "Cancer").length}
     />
     <div className="flex flex-wrap mxn1 mt1">
-      {faces.map((face, i) => (
+      {patches.map((patch, i) => (
         <div key={i} className="col col-4 sm-col-3 md-col-5th px1">
           <div className="mb1 border border-silver rounded overflow-hidden">
             <img
-              src={face.toDataURL()}
-              alt={`face ${i + 1}`}
+              src={patch.src}
+              alt={`patch ${i + 1}`}
               className="block col-12"
             />
             <div className="p05 fs-tiny">
-              {emotions[i].slice(0, 2).map(({ label, value }) => (
-                <div key={label.name} className="flex justify-between">
+              {classifications.map(({ label, value }) => (
+                <div key={i} className="flex justify-between">
                   <div className="mr05 truncate">
-                    {label.emoji}
-                    {label.name}
+                    {label}
                   </div>
                   <div className="bold">{fmt(value)}</div>
                 </div>

@@ -10,6 +10,8 @@ export const EMOTION = {
 
 export const GENDER = { 0: 'Woman', 1: 'Man' }
 
+export const TISSUE = { 0: 'Normal', 1: 'Cancer' }
+
 export const IMAGENET = {
   0: 'tench, Tinca tinca',
   1: 'goldfish, Carassius auratus',

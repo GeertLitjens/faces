@@ -11,12 +11,6 @@ class Model {
 
   async load() {
     this.model = await tf.loadModel(this.path)
-
-    // Warmup model
-    const inShape = this.model.inputs[0].shape.slice(1)
-    const result = tf.tidy(() => this.model.predict(tf.zeros([1, ...inShape])))
-    await result.data()
-    result.dispose()
   }
 
   async imgToInputs(img) {
@@ -32,14 +26,14 @@ class Model {
     return norm.reshape([1, ...norm.shape])
   }
 
-  async classify(img, topK = 10) {
+  async classify(img) {
     const inputs = await this.imgToInputs(img)
     const logits = this.model.predict(inputs)
-    const classes = await this.getTopKClasses(logits, topK)
+    const classes = await this.getTopClass(logits)
     return classes
   }
 
-  async getTopKClasses(logits, topK = 10) {
+  async getTopClass(logits) {
     const values = await logits.data()
     let predictionList = []
 
@@ -49,7 +43,7 @@ class Model {
 
     predictionList = predictionList
       .sort((a, b) => b.value - a.value)
-      .slice(0, topK)
+      .slice(0, 1)
 
     return predictionList.map(x => {
       return { label: this.classes[x.index], value: x.value }

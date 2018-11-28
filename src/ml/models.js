@@ -12,6 +12,16 @@ export class EmotionNet extends Model {
   }
 }
 
+export class CancerNet extends Model {
+  constructor() {
+    super({
+      path: `${process.env.PUBLIC_URL}/static/models/cancer/model.json`,
+      imageSize: 299,
+      classes: classes.TISSUE
+    })
+  }
+}
+
 export class GenderNet extends Model {
   constructor() {
     super({
