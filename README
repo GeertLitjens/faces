@@ -1,9 +1,7 @@
-😄😐🙁
+Metastatic breast cancer cell detector developed for the Radboud Science Award, built with TensorFlow.js
 
-emotion classification with Tensorflow.js
 
+This repository is based on the emotion classification work by Brendan Sudol
 https://brendansudol.com/faces/
-
-writeup: https://brendansudol.com/writing/tfjs-emotions
 
 ---
