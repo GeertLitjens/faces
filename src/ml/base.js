@@ -1,4 +1,4 @@
-import { prepImg, rgbToGrayscale } from './img'
+import { prepImg, } from './img'
 import * as tf from '@tensorflow/tfjs'
 
 class Model {
@@ -17,19 +17,27 @@ class Model {
     // Convert to tensor & resize if necessary
     let norm = await prepImg(img, this.imageSize)
 
-    // TODO: infer whether this is needed based on model & img shapes
-    if (this.isGrayscale) {
-      norm = await rgbToGrayscale(norm)
-    }
-
     // Reshape to a single-element batch so we can pass it to predict.
     return norm.reshape([1, ...norm.shape])
   }
 
-  async classify(img) {
-    const inputs = await this.imgToInputs(img)
-    const logits = this.model.predict(inputs)
-    const classes = await this.getTopClass(logits)
+  async classify(imgs) {
+    let classes = []
+    for(let i = 0; i < imgs.length; ++i) {
+      let img_classes = await this.classifySingleImage(imgs[i])
+      classes.push(img_classes)
+    }
+    return classes
+  }
+
+  async classifySingleImage(img) {
+    let inputs = await this.imgToInputs(img)
+    let logits = tf.tidy(() => {return this.model.predict(inputs)})
+    inputs.dispose()
+    let classes = await this.getTopClass(logits)
+    logits.dispose()
+    inputs = null
+    logits = null
     return classes
   }
 

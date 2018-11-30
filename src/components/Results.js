@@ -20,7 +20,7 @@ const Results = ({ patches, classifications }) => (
   <div>
     <Summary
       total={patches.length}
-      cancer={classifications.filter(r => r.label === "Cancer").length}
+      cancer={classifications.filter(r => r[0].label === "Kankercellen").length}
     />
     <div className="flex flex-wrap mxn1 mt1">
       {patches.map((patch, i) => (
@@ -32,14 +32,12 @@ const Results = ({ patches, classifications }) => (
               className="block col-12"
             />
             <div className="p05 fs-tiny">
-              {classifications.map(({ label, value }) => (
-                <div key={i} className="flex justify-between">
-                  <div className="mr05 truncate">
-                    {label}
-                  </div>
-                  <div className="bold">{fmt(value)}</div>
+              <div key={i} className="flex justify-between">
+                <div className="mr05 truncate">
+                  {classifications[i][0].label}
                 </div>
-              ))}
+                <div className="bold">{fmt(classifications[i][0].value)}</div>
+              </div>
             </div>
           </div>
         </div>

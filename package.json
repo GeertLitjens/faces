@@ -1,6 +1,6 @@
 {
-  "name": "faces",
-  "homepage": "https://brendansudol.github.io/faces",
+  "name": "metastaticcellclassifier",
+  "homepage": "https://geertlitjens.github.io/metastaticcellclassifier/index.html",
   "version": "0.0.1",
   "private": true,
   "dependencies": {

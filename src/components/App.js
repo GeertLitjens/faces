@@ -1,4 +1,3 @@
-import debounce from 'lodash.debounce'
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
 
@@ -7,7 +6,7 @@ import Header from './Header'
 import Message from './Message'
 import Results from './Results'
 
-import sampleImg from '../img/cancer.png'
+import sampleImg from '../img/oefen_data/kankercellen_000.jpg'
 import { CancerNet } from '../ml/models'
 import { readFile, nextFrame } from '../util'
 
@@ -15,17 +14,13 @@ class App extends Component {
   state = {
     ready: false,
     loading: false,
-    imgUrl: sampleImg,
+    imgs: [],
+    imgUrls: [sampleImg],
     classifications: [],
   }
 
   componentDidMount() {
     this.initModels()
-    window.addEventListener('resize', this.handleResize)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize)
   }
 
   async initModels() {
@@ -37,23 +32,31 @@ class App extends Component {
   }
 
   async initPredict()  {
-    if (!this.img || !this.img.complete) return
+    let imgs = [...document.getElementsByClassName('images')]
+    if (imgs.length === 0) return
+    let allCompleted = imgs.every(img => img.complete)
+    if (!allCompleted) return
     this.setState({ loading: true })
     this.analyzeImages()
   }
 
   handleImgLoaded() {
-    this.clearCanvas()
+    let imgs = [...document.getElementsByClassName('images')]
+    if (imgs.length === 0) return
+    let allCompleted = imgs.every(img => img.complete)
+    if (!allCompleted) return
+    this.setState({ loading: true })    
     this.analyzeImages()
   }
 
-  handleResize = debounce(() => this.drawDetections(), 100)
-
   handleUpload = async files => {
     if (!files.length) return
-    const fileData = await readFile(files[0])
+    let fileUrls = []
+    for (let i = 0; i < files.length; ++i) {
+      fileUrls.push((await readFile(files[i])).url)
+    }
     this.setState({
-      imgUrl: fileData.url,
+      imgUrls: fileUrls,
       loading: true,
       classifications: [],
     })
@@ -65,32 +68,17 @@ class App extends Component {
     if (!this.models) return
 
     // get predictions
-    let classifications = await this.models.cancer.classify(this.img)
+    let imgs = [...document.getElementsByClassName('images')]
+    let classifications = await this.models.cancer.classify(imgs)
     this.setState(
-      { loading: false, classifications },
-      this.drawDetections
+      { loading: false, classifications: classifications },
     )
   }
 
-  clearCanvas() {
-    this.canvas.width = 0
-    this.canvas.height = 0
-  }
-
-  async drawDetections() {
-    const { classifications } = this.state
-    if (!classifications.length) return
-
-    const { width, height } = this.img
-    this.canvas.width = width
-    this.canvas.height = height
-  }
-
   render() {
-    const { ready, imgUrl, loading, classifications } = this.state
-    const noClassifications= ready && !loading && imgUrl && !classifications.length
-
-    return (
+    const { ready, imgUrls, loading, classifications } = this.state
+    const noClassifications= ready && !loading && imgUrls && !classifications.length
+    let returnResult = (
       <div className="px2 mx-auto container app">
         <Header />
         <main>
@@ -105,20 +93,18 @@ class App extends Component {
               Probeer een plaatje!
             </Dropzone>
           </div>
-          {imgUrl && (
-            <div className="relative">
-              <img
-                ref={el => (this.img = el)}
-                onLoad={this.handleImgLoaded.bind(this)}
-                src={imgUrl}
-                alt=""
-              />
-              <canvas
-                ref={el => (this.canvas = el)}
-                className="absolute top-0 left-0"
-              />
-            </div>
-          )}
+          <div className="relative">
+          {imgUrls &&
+            imgUrls.map((imgUrl, i) => (
+                <img style={ {padding: "5px"} }
+                  key={i}
+                  className="images"
+                  onLoad={this.handleImgLoaded.bind(this)}
+                  src={imgUrl}
+                  alt=""
+                />
+          ))}
+          </div>          
           {!ready && <Message>Slimme computer laden...</Message>}
           {loading && <Message>Plaatje bekijken...</Message>}
           {noClassifications && (
@@ -126,11 +112,12 @@ class App extends Component {
               <strong>Sorry!</strong> Er kon niks worden geclassificeerd.
             </Message>
           )}
-          {classifications.length > 0 && <Results patches={[this.img]} classifications={classifications} />}
+          {classifications.length > 0 && <Results patches={[...document.getElementsByClassName('images')]} classifications={classifications} />}
         </main>
         <Footer />
       </div>
     )
+    return returnResult
   }
 }
 
