@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/metastaticcellclassifier/index.html/precache-manifest.09300420fe00a6fcc3b4a789296fbe24.js"
+  "/metastaticcellclassifier/precache-manifest.fd4ad3a7f720ac1dbe5da5b47bd4c98a.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/metastaticcellclassifier/index.html/index.html", {
+workbox.routing.registerNavigationRoute("/metastaticcellclassifier/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
