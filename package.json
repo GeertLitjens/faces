@@ -1,6 +1,6 @@
 {
   "name": "metastaticcellclassifier",
-  "homepage": "https://geertlitjens.github.io/metastaticcellclassifier/index.html",
+  "homepage": "https://geertlitjens.github.io/metastaticcellclassifier/",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
