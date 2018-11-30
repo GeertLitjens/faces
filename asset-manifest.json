@@ -1,7 +1,16 @@
 {
-  "main.css": "static/css/main.870deaa3.css",
-  "main.css.map": "static/css/main.870deaa3.css.map",
-  "main.js": "static/js/main.06bab1fd.js",
-  "main.js.map": "static/js/main.06bab1fd.js.map",
-  "static/media/sample.jpg": "static/media/sample.c0056ec9.jpg"
+  "main.css": "/metastaticcellclassifier/index.html/static/css/main.e7e71074.chunk.css",
+  "main.js": "/metastaticcellclassifier/index.html/static/js/main.8a418872.chunk.js",
+  "main.js.map": "/metastaticcellclassifier/index.html/static/js/main.8a418872.chunk.js.map",
+  "static/css/1.88a99f69.chunk.css": "/metastaticcellclassifier/index.html/static/css/1.88a99f69.chunk.css",
+  "static/js/1.46afb310.chunk.js": "/metastaticcellclassifier/index.html/static/js/1.46afb310.chunk.js",
+  "static/js/1.46afb310.chunk.js.map": "/metastaticcellclassifier/index.html/static/js/1.46afb310.chunk.js.map",
+  "runtime~main.js": "/metastaticcellclassifier/index.html/static/js/runtime~main.c3dcfb8f.js",
+  "runtime~main.js.map": "/metastaticcellclassifier/index.html/static/js/runtime~main.c3dcfb8f.js.map",
+  "static/css/main.e7e71074.chunk.css.map": "/metastaticcellclassifier/index.html/static/css/main.e7e71074.chunk.css.map",
+  "static/media/kankercellen_000.jpg": "/metastaticcellclassifier/index.html/static/media/kankercellen_000.694dcd0a.jpg",
+  "static/css/1.88a99f69.chunk.css.map": "/metastaticcellclassifier/index.html/static/css/1.88a99f69.chunk.css.map",
+  "index.html": "/metastaticcellclassifier/index.html/index.html",
+  "precache-manifest.09300420fe00a6fcc3b4a789296fbe24.js": "/metastaticcellclassifier/index.html/precache-manifest.09300420fe00a6fcc3b4a789296fbe24.js",
+  "service-worker.js": "/metastaticcellclassifier/index.html/service-worker.js"
 }
